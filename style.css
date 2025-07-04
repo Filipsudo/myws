@@ -197,3 +197,7 @@ button:hover {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
 }
+section {
+  scroll-margin-top: 80px; /* висота твого хедера */
+}
+
