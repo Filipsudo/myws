@@ -3,32 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <title>Photographer Portfolio</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Open+Sans&display=swap" rel="stylesheet">
-
-
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Open+Sans&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <!-- AOS Library -->
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease-in-out;
+    }
+
+    section.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
+  <div id="top"></div>
   <header>
     <h1>Emma Davis — Photographer</h1>
     <nav>
-      <a href="#about">About</a>
+      <a href="#top">About</a>
       <a href="portfolio.html">My Work</a>
-      <a href="#services">Services</a>
-      <a href="#contact">Contact</a>
     </nav>
   </header>
 
-  <section id="about">
-    <section id="about" data-aos="fade-up">
-  <h2>About Me</h2>
-  <p>Hello! I’m Emma Davis, a professional lifestyle and portrait photographer based in Berlin. I specialize in capturing authentic moments with natural light and storytelling techniques. Let's create something beautiful together.</p>
-</section>
+  <section id="about" class="section" data-aos="fade-up">
+    <h2>About Me</h2>
+    <p>Hello! I’m Emma Davis, a professional lifestyle and portrait photographer based in Berlin...</p>
+  </section>
 
-  <section id="services">
+  <section id="services" class="section" data-aos="fade-up">
     <h2>Services</h2>
     <ul>
       <li>Individual photo sessions</li>
@@ -37,56 +48,78 @@
     </ul>
   </section>
 
-  <section id="contact">
+  <section id="contact" class="section" data-aos="fade-up">
     <h2>Contact Me</h2>
     <p>Email: photo@example.com</p>
     <p>Phone: +1 234 567 8901</p>
   </section>
 
-  <section id="reviews" style="margin-top: 50px;">
-  <h2>Reviews</h2>
-  <form id="reviewForm">
-    <label for="review">Leave a review:</label><br>
-    <textarea id="review" name="review" rows="2" cols="50"></textarea><br>
-    <button type="submit">Submit</button>
-  </form>
-
-  <div id="allReviews" style="margin-top: 20px;"></div>
-</section>
-
+  <section id="reviews" class="section" data-aos="fade-up" style="margin-top: 50px;">
+    <h2>Reviews</h2>
+    <form id="reviewForm">
+      <label for="review">Leave a review:</label><br>
+      <textarea id="review" name="review" rows="2" cols="50"></textarea><br>
+      <button type="submit">Submit</button>
+    </form>
+    <div id="allReviews" style="margin-top: 20px;"></div>
+  </section>
 
   <footer>
     <p>© 2025 Alexander. All rights reserved.</p>
   </footer>
-  <!-- AOS Script -->
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-  AOS.init();
-</script>
-<script>
-  const form = document.getElementById('reviewForm');
-  const allReviews = document.getElementById('allReviews');
 
-  form.addEventListener('submit', function(e) {
-    e.preventDefault(); // не перезагружать страницу
-    const reviewText = document.getElementById('review').value;
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 
-    const temp = document.createElement("div");
-    temp.innerHTML = `<p>${reviewText}</p>`;
-    
-    
-    [...temp.querySelectorAll("script")].forEach(s => eval(s.innerText));
-    
-    allReviews.appendChild(temp);
+  <script>
+    const form = document.getElementById('reviewForm');
+    const allReviews = document.getElementById('allReviews');
 
-    form.reset();
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const reviewText = document.getElementById('review').value;
+
+      const temp = document.createElement("div");
+      temp.innerHTML = `<p>${reviewText}</p>`;
+      [...temp.querySelectorAll("script")].forEach(s => eval(s.innerText));
+      allReviews.appendChild(temp);
+      form.reset();
+    });
+  </script>
+
+  <script>
+    document.cookie = "username=phil; path=/;";
+  </script>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    });
+
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+  <script>
+  // Прокрутка до якоря після завантаження, якщо є хеш (#about тощо)
+  window.addEventListener("load", function () {
+    if (window.location.hash) {
+      const id = window.location.hash.slice(1); // видаляємо #
+      const target = document.getElementById(id);
+      if (target) {
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: "smooth" });
+        }, 100); // трохи зачекати, поки все завантажиться
+      }
+    }
   });
 </script>
-<script>
-  document.cookie = "username=phil; path=/;";
-</script>
-
 
 </body>
 </html>
-
